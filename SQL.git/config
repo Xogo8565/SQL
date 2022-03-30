@@ -1,0 +1,11 @@
+[core]
+	repositoryformatversion = 0
+	filemode = false
+	bare = true
+	ignorecase = true
+	precomposeunicode = true
+[remote "origin"]
+	url = git@github.com:Xogo8565/SQL.git
+	fetch = +refs/*:refs/*
+	mirror = true
+	pushurl = git@github.com:Xogo8565/SQL.git
