@@ -117,5 +117,5 @@ select
     round(avg(point),1) "평균"
 from tb_grade
     where student_no = 'A112113'
-    group by rollup(substr(term_no,1,4), substr(term_no,5,2));
+    group by rollup (substr(term_no,1,4), substr(term_no,5,2));
     
