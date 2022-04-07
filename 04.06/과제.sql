@@ -49,3 +49,68 @@ COMMIT;
 select * from tb_category;
 --9
 alter table tb_department add constraint fk_department_category foreign key (category) references tb_category (category_name);
+
+--10
+select * from tb_student;
+select * from tb_department;
+select * from tb_professor;
+create view vm_학생일반정보 as(
+    select student_no, student_name, student_address from tb_student);
+
+select * from vm_학생일반정보;
+
+--11
+
+create view vm_지도면담 as (
+    select* from (
+       select 
+          student_name "학생이름", 
+         department_name "학과이름",
+          professor_name "지도교수이름"
+        from tb_student s, tb_department d, tb_professor
+        where s.department_no = d.department_no
+        and coach_professor_no = professor_no(+)
+        order by 2
+    )
+);
+
+select * from vm_지도면담;
+
+--12
+
+create view vm_학과별학생수 as(
+    select 
+        department_name, 
+        count(*) 
+    from tb_student s, tb_department d 
+    where s.department_no = d.department_no
+    group by department_name
+);
+
+--13
+
+update vm_학생일반정보 set student_name ='장석수' where student_no = 'A213046';
+select * from vm_학생일반정보;
+
+-- 14
+drop view vm_학생일반정보;
+
+create view vm_학생일반정보 as(
+    select student_no, student_name, student_address from tb_student) with read only;
+
+update vm_학생일반정보 set student_name ='장석수' where student_no = 'A213046'; -- read-only view 오류
+
+--15 
+select * from tb_grade order by 1 desc;
+select * from tb_class;
+select * from(
+    select 
+        g.class_no, 
+        class_name,
+        count(*) 
+        from tb_grade g, tb_class c
+    where g.class_no = c.class_no
+    and substr(term_no,1,4) in (2009,2008,2007)
+    group by g.class_no, class_name
+    order by 3 desc)
+where rownum <= 3;
