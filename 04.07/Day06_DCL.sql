@@ -43,3 +43,4 @@ revoke select, insert on kh.coffee from test01;
 select * from kh.coffee; -- 에러 발생
 
 select * from dba_role_privs where grantee = 'KH';
+
